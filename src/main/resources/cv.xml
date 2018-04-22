@@ -1,38 +1,65 @@
-<Contents xmlns="http://bradik.com"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:schemaLocation="http://bradik.com cv.xsd">
-    <Personal gender="Мужчина" birthDate="1975-12-04">
-        <Name>Яковлев Родион Владимирович</Name>
-        <AddressLocality address="Санкт-Петербург" metro="м. Ладожская" info=", готов к переезду, готов к командировкам"></AddressLocality>
-        <Telephone>+79119765740</Telephone>
-        <Email>bradnm@ya.ru</Email>
-    </Personal>
+<?xml version="1.0"?>
+<contents>
+    <personal gender="Мужчина" birthdate="1975-12-04" age="42">
+        <calc>
+            <birthdate>родился 4 декабря 1975</birthdate>
+            <age>42 года</age>
+        </calc>
+        <name>Яковлев Родион Владимирович</name>
+        <addresslocality address="Санкт-Петербург" metro="м. Ладожская"
+                         info=", готов к переезду, готов к командировкам"></addresslocality>
+        <telephone>+79119765740</telephone>
+        <email>bradnm@ya.ru</email>
+    </personal>
 
-    <Position name="java developer">
-        <Category>Информационные технологии, интернет, телеком</Category>
-        <Specialization>Программирование, Разработка</Specialization>
-        <Workload>Занятость: полная занятость, частичная занятость, проектная работа</Workload>
-        <Schedule>График работы: полный день</Schedule>
-    </Position>
+    <position name="java developer">
+        <category>Информационные технологии, интернет, телеком</category>
+        <specialization>Программирование, Разработка</specialization>
+        <workload>полная занятость, частичная занятость, проектная работа</workload>
+        <schedule>полный день</schedule>
+    </position>
 
-    <Experiences>
-        <Experience start="Июнь 2017" title="TOPJAVA" url="javaops.ru">
-            <Experience-position name="Программист"/>
-            <Experience-description>
-                Участие в разработке Spring/JPA Enterprise приложения c авторизацией и правами доступа на основе ролей
-                на стеке: Maven, Spring MVC, Spring Security, REST (Jackson), Java 8 Stream API:
-                * реализация сохранения в базы Postgres и HSQLDB на основе Spring JBDC, JPA(Hibernate) и Spring-Data-JPA
-                * реализация и JUnit тестирование REST и AJAX контроллеров
-                * реализация клиента на Bootstrap (css/js), datatables, jQuery + plugins.
-            </Experience-description>
-        </Experience>
-    </Experiences>
+    <experiences seniority="11 лет 9 месяцев">
+        <experience start="2017-07" end="" seniority="Июнь 2017 — по настоящее время" duration="11 месяцев"
+                    title="TOPJAVA" url="http://javaops.ru">
+            <position name="Программист"/>
+            <description>
+                <div>
+                    Участие в разработке Spring/JPA Enterprise приложения c авторизацией и правами доступа на основе ролей на стеке: Maven, Spring MVC, Spring Security, REST (Jackson), Java 8 Stream API:
+                    <li>реализация сохранения в базы Postgres и HSQLDB на основе Spring JBDC, JPA(Hibernate) и Spring-Data-JPA</li>
+                    <li>реализация и JUnit тестирование REST и AJAX контроллеров</li>
+                    <li>реализация клиента на Bootstrap (css/js), datatables, jQuery + plugins.</li>
+                </div>
+            </description>
+        </experience>
+    </experiences>
 
-    <Key-skills>
-        <Skill>Java</Skill>
-        <Skill>C++</Skill>
-        <Skill>SQL</Skill>
-        <Skill>Java</Skill>
-    </Key-skills>
+    <skills>
+        <skill>Java</skill>
+        <skill>C++</skill>
+        <skill>SQL</skill>
+    </skills>
 
-</Contents>
+    <qualitys>
+        <quality>Серьезно отношусь к работе. Умею сконцентрироваться на задаче и получить положительный результат. Люблю решать сложные задачи.</quality>
+        <quality>Ответственный, исполнительный, легко обучаемый, неконфликтный. Люблю работать в команде.</quality>
+    </qualitys>
+    <interests>
+        <interest>Люблю спорт, роликовые коньки, большой теннис, сноуборд. Увлекаюсь латиноамериканскими танцами.</interest>
+    </interests>
+    <educations>
+        <education graduated="1998" name="ТВАИИ" specialty="Инженер исследователь-системотехник по радиолокационным системам"/>
+    </educations>
+    <languages>
+        <language>Русский - родной</language>
+        <language>Английский - читаю профессиональную литературу</language>
+    </languages>
+    <courses>
+        <course graduated="2017"  name="Он лайн курс javarush.ru" desc="javarush.ru"/>
+    </courses>
+    <additional>
+        <citizenship>Россия</citizenship>
+        <timetowork>не имеет значения</timetowork>
+    </additional>
+
+</contents>
