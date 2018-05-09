@@ -195,7 +195,9 @@
         </div>
     </xsl:template>
     <xsl:template match="skill">
-        <span class="badge badge-default label-large"> <xsl:value-of select="text()"> </xsl:value-of> </span>
+        <span class="badge badge-primary">
+            <xsl:value-of select="text()"> </xsl:value-of>
+        </span>
     </xsl:template>
     <xsl:template match="quality">
         <li><xsl:value-of select="text()"/></li>
