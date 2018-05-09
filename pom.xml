@@ -17,6 +17,33 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>unpack</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.webjars</groupId>
+                                    <artifactId>bootstrap</artifactId>
+                                    <version>4.1.0</version>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${project.basedir}/out/dist</outputDirectory>
+                                    <!--<destFileName>${project.basedir}/out/dist/css/bootstrap.css</destFileName>-->
+                                    <includes>META-INF/resources/webjars/bootstrap/4.1.0/css/bootstrap.css</includes>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
@@ -34,6 +61,13 @@
             <artifactId>guava</artifactId>
             <version>21.0</version>
         </dependency>
+        <!--https://mvnrepository.com/artifact/org.webjars/bootstrap-->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>4.1.0</version>
+        </dependency>
     </dependencies>
+
 
 </project>
