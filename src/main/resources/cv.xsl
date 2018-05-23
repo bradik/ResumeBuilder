@@ -6,9 +6,17 @@
     <xsl:template match="/">
         <html>
             <head>
-                <title>Резюме</title>
-                <!--https://stackoverflow.com/questions/10184694/how-to-create-hyperlink-using-xslt-->
-                <xsl:text disable-output-escaping='yes'>&lt;link rel="stylesheet" href="dist/css/bootstrap.min.css" rel="stylesheet"&gt;</xsl:text>
+                <!-- Latest compiled and minified CSS -->
+                <xsl:text disable-output-escaping='yes'>&lt;link
+                    rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+                          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"
+                &gt;</xsl:text>
+                <!-- Optional theme -->
+                <xsl:text disable-output-escaping='yes'>&lt;link
+                    rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+                      integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"
+                &gt;</xsl:text>
+
                 <style>
                     .box1 {
                     background: rgba(203, 209, 211, .3);
@@ -21,6 +29,8 @@
                     font-size: large;
                     }
                 </style>
+
+                <title>Резюме</title>
             </head>
             <body>
                 <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -38,7 +48,7 @@
                     <div class="row" style="margin-top: 15px">
                         <div class="col-md-2">
                             <a href="#" id="pop">
-                                <xsl:text disable-output-escaping='yes'>&lt;img id="imageresource" src="dist/pic/pic.jpeg" class="img-thumbnail" width="370" height="500"</xsl:text>
+                                <xsl:text disable-output-escaping='yes'>&lt;img id="imageresource" src="static/pic/photo.jpeg" class="img-thumbnail" width="370" height="500"</xsl:text>
                                 <xsl:text>alt="</xsl:text>
                                 <xsl:value-of select="/contents/personal/name/text()"/>
                                 <xsl:text disable-output-escaping='yes'>"&gt;</xsl:text>
@@ -50,11 +60,21 @@
                             </h3>
                             <div>
                                 <!--Мужчина, 41 год, родился 4 декабря 1975-->
-                                <xsl:value-of select="/contents/personal/@gender"/>
-                                <xsl:text>, </xsl:text>
-                                <xsl:value-of select="/contents/personal/calc/birthdate/text()"/>
-                                <xsl:text>, </xsl:text>
-                                <xsl:value-of select="/contents/personal/calc/age/text()"/>
+
+                                <xsl:param name="gender">
+                                    <xsl:value-of select="/contents/personal/@gender"/>
+                                </xsl:param>
+
+                                <xsl:param name="birthdate">
+                                    <xsl:value-of select="/contents/personal/calc/birthdate/text()"/>
+                                </xsl:param>
+
+                                <xsl:param name="age">
+                                    <xsl:value-of select="/contents/personal/calc/age/text()"/>
+                                </xsl:param>
+
+                                <xsl:value-of select="concat($gender, ', ', $birthdate)"/>
+
                             </div>
                             <div>
                                 <xsl:value-of select="/contents/personal/addresslocality/@address"/>,
@@ -70,14 +90,10 @@
                                 <xsl:value-of select="contents/personal/telephone"/>
                             </div>
                             <!--<div><a href="mailto:bradnm@ya.ru" itemprop="email">bradnm@ya.ru</a>- предпочитаемый способ связи</div>-->
-                            <div>
-                                <xsl:text disable-output-escaping='yes'>&lt;a </xsl:text>
-                                <xsl:text>href="mailto:bradnm@ya.ru" itemprop="email"</xsl:text>
-                                <xsl:text disable-output-escaping='yes'>&gt;</xsl:text>
+                            <xsl:param name="email">
                                 <xsl:value-of select="contents/personal/email/text()"/>
-                                <xsl:text disable-output-escaping='yes'>&gt;&lt;/a&gt;</xsl:text>
-                                - предпочитаемый способ связи
-                            </div>
+                            </xsl:param>
+                            <div><a href="mailto:{$email}" itemprop="email"><xsl:value-of select="$email"/></a>- предпочитаемый способ связи</div>
                         </div>
                     </div>
                     <hr/>
@@ -100,14 +116,17 @@
                     <p>Занятость: <xsl:value-of select="/contents/position/workload/text()"/></p>
                     <p>График работы: <xsl:value-of select="/contents/position/schedule/text()"/></p>
                     <div>
-                        <h4>Опыт работы <xsl:value-of select="/contents/experiences/@seniority"/></h4>
+                        <xsl:param name="data-start">
+                            <xsl:value-of select="/contents/experiences/@start"/>
+                        </xsl:param>
+                        <h4 id="experiences" data-start="{$data-start}">Опыт работы </h4>
                     </div>
 
                     <xsl:apply-templates select="/contents/experiences/experience"/>
 
                     <div class="row" style="shape-margin: 15px">
                         <div><h4>Ключевые навыки</h4></div>
-                        <xsl:apply-templates select="/contents/skills/skill"/>
+                        <xsl:apply-templates select="/contents/skills/row"/>
                     </div>
 
                     <div class="row" style="shape-margin: 15px">
@@ -142,12 +161,20 @@
                     </div>
 
                 </div>
-                <!-- Bootstrap core JavaScript
-                ================================================== -->
+
+                <!-- Bootstrap core JavaScript-->
                 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
                         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
                         crossorigin="anonymous"></script>
-                <script src="dist/js/bootstrap.min.js"></script>
+
+                <!-- Latest compiled and minified JavaScript -->
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+                        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+                        crossorigin="anonymous"></script>
+
+                <script src="static/js/moment/moment.js"></script>
+                <script src="static/js/moment/locale/ru.js"></script>
+                <script src="static/js/main.js"></script>
 
                 <script>
                     $("#pop").on("click", function () {
@@ -161,11 +188,17 @@
     <xsl:template match="experience">
         <div class="row" style="margin-top: 15px">
             <div class="col-md-3">
-                <div>
-                    <xsl:value-of select="@seniority"/>
-                    <div>
-                        <xsl:value-of select="@duration"/>
-                    </div>
+                <xsl:param name="start">
+                    <xsl:value-of select="@start"/>
+                </xsl:param>
+                <xsl:param name="end">
+                    <xsl:value-of select="@end"/>
+                </xsl:param>
+                <div class="experiencesrow" data-start="{$start}" data-end="{$end}">
+                    <!--<xsl:value-of select="@seniority"/>-->
+                    <!--<div>-->
+                        <!--<xsl:value-of select="@duration"/>-->
+                    <!--</div>-->
                 </div>
             </div>
             <div class="col-md-5">
@@ -175,13 +208,11 @@
                             <xsl:value-of select="@title"/>
                         </h4>
                         <p>
-                            <span>
-                                <xsl:text disable-output-escaping='yes'>&lt;a href="</xsl:text>
+                            <xsl:param name="url">
                                 <xsl:value-of select="@url"/>
-                                <xsl:text disable-output-escaping='yes'>"&gt;</xsl:text>
-                                <xsl:value-of select="@url"/>
-                                <xsl:text disable-output-escaping='yes'>&lt;/a&gt;</xsl:text>
-                            </span>
+                            </xsl:param>
+                            <!--<span><a href="http://www.reksoft.com/ru/">http://www.reksoft.com/ru/</a></span>-->
+                            <span><a href="{$url}" target="_blank"><xsl:value-of select="@url"/></a></span>
                         </p>
                     </div>
                     <div>
@@ -194,10 +225,15 @@
             </div>
         </div>
     </xsl:template>
+    <xsl:template match="row">
+        <h3>
+            <xsl:apply-templates select="skill"/>
+        </h3>
+    </xsl:template>
     <xsl:template match="skill">
-        <span class="badge badge-primary">
-            <xsl:value-of select="text()"> </xsl:value-of>
-        </span>
+        <div class="label label-default">
+            <xsl:value-of select="text()"/>
+        </div>
     </xsl:template>
     <xsl:template match="quality">
         <li><xsl:value-of select="text()"/></li>
