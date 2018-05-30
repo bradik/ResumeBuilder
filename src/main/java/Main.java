@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Writer;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -30,7 +31,7 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
  */
 public class Main {
 
-    public static void main(String[] args) throws IOException, TransformerException {
+    public static void main(String[] args) throws IOException, TransformerException, URISyntaxException {
 
         if (args.length != 2) {
             throw new IllegalArgumentException(
@@ -43,8 +44,12 @@ public class Main {
         Path photo = Paths.get(args[1]);
         Path photoOut = Paths.get("out/static/pic/photo.jpeg");
 
+        Path mainjs = Paths.get(Resources.getResource("main.js").toURI());
+        Path mainjsOut = Paths.get("out/static/js/main.js");
+
         Files.createDirectories(photoOut.getParent());
         Files.copy(photo,photoOut, REPLACE_EXISTING);
+        Files.copy(mainjs,mainjsOut, REPLACE_EXISTING);
 
         //Пока больше не требуется т.к. данные расчитываются через js
         //String html = transform(updateData(xmlUrl));

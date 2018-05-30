@@ -13,20 +13,26 @@
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <guava.version>21.0</guava.version>
+        <bootstrap.version>3.3.7</bootstrap.version>
+        <jquery.version>3.3.1</jquery.version>
+        <momentjs.version>2.22.1</momentjs.version>
+        <project.depedency>${project.basedir}/dependency</project.depedency>
+        <project.static>${project.basedir}/out/static</project.static>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>21.0</version>
+            <version>${guava.version}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.webjars/bootstrap -->
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>bootstrap</artifactId>
-            <version>3.3.7</version>
+            <version>${bootstrap.version}</version>
         </dependency>
 
 
@@ -34,14 +40,14 @@
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>momentjs</artifactId>
-            <version>2.22.1</version>
+            <version>${momentjs.version}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.webjars/jquery -->
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>jquery</artifactId>
-            <version>3.3.1</version>
+            <version>${jquery.version}</version>
         </dependency>
     </dependencies>
 
@@ -52,35 +58,51 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                 </configuration>
             </plugin>
-            <!--<plugin>-->
-                <!--<groupId>org.apache.maven.plugins</groupId>-->
-                <!--<artifactId>maven-dependency-plugin</artifactId>-->
-                <!--<version>3.1.0</version>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>unpack</id>-->
-                        <!--<phase>package</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>unpack</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<artifactItems>-->
-                                <!--<artifactItem>-->
-                                    <!--<groupId>org.webjars.bower</groupId>-->
-                                    <!--<artifactId>bootstrap</artifactId>-->
-                                    <!--<version>4.1.1</version>-->
-                                    <!--<overWrite>true</overWrite>-->
-                                    <!--&lt;!&ndash;<includes>META-INF/resources/webjars/bootstrap/4.1.0/css/bootstrap.css</includes>&ndash;&gt;-->
-                                <!--</artifactItem>-->
-                            <!--</artifactItems>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>unpack</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.depedency}</outputDirectory>
+                            <markersDirectory>${project.depedency}</markersDirectory>
+                            <useJvmChmod>true</useJvmChmod>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.webjars</groupId>
+                                    <artifactId>bootstrap</artifactId>
+                                    <version>${bootstrap.version}</version>
+                                    <overWrite>true</overWrite>
+                                    <includes>**/bootstrap.min.css,**/bootstrap-theme.min.css,**/bootstrap.min.js</includes>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.webjars</groupId>
+                                    <artifactId>momentjs</artifactId>
+                                    <version>${momentjs.version}</version>
+                                    <overWrite>true</overWrite>
+                                    <includes>**/moment.js,**/ru.js</includes>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.webjars</groupId>
+                                    <artifactId>jquery</artifactId>
+                                    <version>${jquery.version}</version>
+                                    <overWrite>true</overWrite>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
@@ -94,9 +116,39 @@
                         </goals>
                         <configuration>
                             <target>
-                                <copy todir="${project.basedir}/out/static/js" flatten="false">
-                                    <fileset dir="${project.basedir}/static/js/"/>
+                                <!--<copy todir="${project.static}/js" flatten="false">-->
+                                    <!--<fileset dir="${project.basedir}/static/js/"/>-->
+                                <!--</copy>-->
+                                <copy todir="${project.static}/js/moment" flatten="true">
+                                    <fileset dir="${project.depedency}/">
+                                        <include name="**/moment.js"/>
+                                    </fileset>
                                 </copy>
+                                <copy todir="${project.static}/js/moment/locale" flatten="true">
+                                    <fileset dir="${project.depedency}/">
+                                        <include name="**/ru.js"/>
+                                    </fileset>
+                                </copy>
+                                <copy todir="${project.static}/js/bootstrap/css" flatten="true">
+                                    <fileset dir="${project.depedency}/">
+                                        <include name="**/bootstrap.min.css"/>
+                                        <include name="**/bootstrap-theme.min.css"/>
+                                    </fileset>
+                                </copy>
+                                <copy todir="${project.static}/js/bootstrap" flatten="true">
+                                    <fileset dir="${project.depedency}/">
+                                        <include name="**/bootstrap.min.js"/>
+                                    </fileset>
+                                </copy>
+
+                                <copy todir="${project.static}/js/jquery" flatten="true">
+                                    <fileset dir="${project.depedency}/">
+                                        <include name="**/jquery.js"/>
+                                    </fileset>
+                                </copy>
+
+
+
                                 <!--<copy todir="${project.basedir}/out/dist/js" flatten="true">-->
                                     <!--<fileset dir="${project.build.directory}/dependency/">-->
                                         <!--<include name="**/bootstrap.js"/>-->
