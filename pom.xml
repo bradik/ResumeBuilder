@@ -5,15 +5,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.gmail.bradik</groupId>
-    <artifactId>ResumeBuilder</artifactId>
+    <artifactId>CV</artifactId>
     <name>Resume Builder</name>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
 
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <guava.version>21.0</guava.version>
+        <guava.version>25.0-jre</guava.version>
         <bootstrap.version>3.3.7</bootstrap.version>
         <jquery.version>3.3.1</jquery.version>
         <momentjs.version>2.22.1</momentjs.version>
@@ -63,6 +63,21 @@
                 </configuration>
             </plugin>
             <plugin>
+                <!-- Build an executable JAR -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <mainClass>com.gmail.bradik.CV</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <version>3.1.0</version>
@@ -83,7 +98,8 @@
                                     <artifactId>bootstrap</artifactId>
                                     <version>${bootstrap.version}</version>
                                     <overWrite>true</overWrite>
-                                    <includes>**/bootstrap.min.css,**/bootstrap-theme.min.css,**/bootstrap.min.js</includes>
+                                    <includes>**/bootstrap.min.css,**/bootstrap-theme.min.css,**/bootstrap.min.js
+                                    </includes>
                                 </artifactItem>
                                 <artifactItem>
                                     <groupId>org.webjars</groupId>
@@ -117,7 +133,7 @@
                         <configuration>
                             <target>
                                 <!--<copy todir="${project.static}/js" flatten="false">-->
-                                    <!--<fileset dir="${project.basedir}/static/js/"/>-->
+                                <!--<fileset dir="${project.basedir}/static/js/"/>-->
                                 <!--</copy>-->
                                 <copy todir="${project.static}/js/moment" flatten="true">
                                     <fileset dir="${project.depedency}/">
@@ -148,12 +164,11 @@
                                 </copy>
 
 
-
                                 <!--<copy todir="${project.basedir}/out/dist/js" flatten="true">-->
-                                    <!--<fileset dir="${project.build.directory}/dependency/">-->
-                                        <!--<include name="**/bootstrap.js"/>-->
-                                        <!--<include name="**/bootstrap.min.js"/>-->
-                                    <!--</fileset>-->
+                                <!--<fileset dir="${project.build.directory}/dependency/">-->
+                                <!--<include name="**/bootstrap.js"/>-->
+                                <!--<include name="**/bootstrap.min.js"/>-->
+                                <!--</fileset>-->
                                 <!--</copy>-->
                             </target>
                         </configuration>
