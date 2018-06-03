@@ -1,10 +1,12 @@
-import com.google.common.io.Resources;
+package com.gmail.bradik;
+
+import com.gmail.bradik.util.DateUtil;
+import com.gmail.bradik.util.FileUtils;
+import com.gmail.bradik.util.XsltProcessor;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import util.DateUtil;
-import util.XsltProcessor;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -20,37 +22,34 @@ import java.io.Writer;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
-
-import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 /**
  * Created by Brad on 06.11.2017.
  */
-public class Main {
+public class CV {
+
+    public static URL getResource(String name) {
+        URL url = CV.class.getResource("/" + name);
+        //Resources.getResource(name)
+        return url;
+    }
 
     public static void main(String[] args) throws IOException, TransformerException, URISyntaxException {
 
         if (args.length != 2) {
             throw new IllegalArgumentException(
                     "\nNo parameters set:\n" +
-                    "data/cv.xml data/photo.jpeg");
+                            "data/cv.xml data/photo.jpeg");
         }
 
+
+        FileUtils.copyFile(args[1], "out/static/pic/photo.jpeg");
+
+        FileUtils.copyResoursToFile("main.js", "out/static/js/main.js");
+
         URL xmlUrl = Paths.get(args[0]).toFile().toURI().toURL();
-
-        Path photo = Paths.get(args[1]);
-        Path photoOut = Paths.get("out/static/pic/photo.jpeg");
-
-        Path mainjs = Paths.get(Resources.getResource("main.js").toURI());
-        Path mainjsOut = Paths.get("out/static/js/main.js");
-
-        Files.createDirectories(photoOut.getParent());
-        Files.copy(photo,photoOut, REPLACE_EXISTING);
-        Files.copy(mainjs,mainjsOut, REPLACE_EXISTING);
-
         //Пока больше не требуется т.к. данные расчитываются через js
         //String html = transform(updateData(xmlUrl));
         String html = transform(xmlUrl);
@@ -114,7 +113,7 @@ public class Main {
 
     private static String transform(URL xmlUrl) throws IOException, TransformerException {
 
-        URL xslURL = Resources.getResource("cv.xsl");
+        URL xslURL = getResource("cv.xsl");
         try (InputStream xmlStream = xmlUrl.openStream(); InputStream xslStream = xslURL.openStream()) {
             XsltProcessor processor = new XsltProcessor(xslStream);
             return processor.transform(xmlStream);

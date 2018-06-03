@@ -1,4 +1,4 @@
-package util;
+package com.gmail.bradik.util;
 
 import java.text.DateFormat;
 import java.text.ParseException;
