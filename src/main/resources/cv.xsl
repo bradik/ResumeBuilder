@@ -160,13 +160,14 @@
 
                 </div>
 
-                <!-- Bootstrap core JavaScript-->
-                <script src="static/js/bootstrap/bootstrap.min.js"></script>
                 <!-- Latest compiled and minified JavaScript -->
                 <script src="static/js/jquery/jquery.js"></script>
-
+                <!-- Bootstrap core JavaScript-->
+                <script src="static/js/bootstrap/bootstrap.min.js"></script>
+                <!-- Moment.js-->
                 <script src="static/js/moment/moment.js"></script>
                 <script src="static/js/moment/locale/ru.js"></script>
+
                 <script src="static/js/main.js"></script>
 
                 <script>
