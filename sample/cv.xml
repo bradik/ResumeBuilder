@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<contents>
+    <personal gender="Мужчина" birthdate="1996-01-25">
+        <name>Петров Кирилл Генадьевич</name>
+        <addresslocality address="Санкт-Петербург" metro="м. Ветеранов"
+                         info=", готов к переезду, готов к командировкам"/>
+        <telephone>+79219214545</telephone>
+        <email>petrov_kirill@gmail.com</email>
+    </personal>
+
+    <position name="java developer">
+        <category>Информационные технологии, интернет, телеком</category>
+        <specialization>Программирование, Разработка</specialization>
+        <workload>полная занятость, частичная занятость, проектная работа</workload>
+        <schedule>полный день</schedule>
+    </position>
+
+    <experiences start="2016-07" end="" duration="">
+        <experience start="2016-07" end="" seniority="" duration=""
+                    title="GOST-group" url="www.gost-group.com">
+            <position name="Программист Java"/>
+            <description>
+                <div>
+                    <li>Разработка модулей в проекте, реализованном на</li>
+                    микросервисной архитектуре
+                    <li>Написание RESTful API</li>
+                    <li>Написание интеграционных и unit тестов</li>
+                    <li>Глобальный рефакторинг приложения, а также всех зависимых</li>
+                    модулей под новый функционал
+                    <li>Работа с реляционными и нереляционными (MongoDB) БД</li>
+                    Написание запросов
+                </div>
+            </description>
+        </experience>
+    </experiences>
+
+    <skills>
+        <row>
+            <skill>Java</skill>
+            <skill>SQL</skill>
+            <skill>XML</skill>
+            <skill>XSLT</skill>
+            <skill>JDBC</skill>
+            <skill>Hibernate ORM</skill>
+            <skill>Spring Framework</skill>
+            <skill>JMS</skill>
+            <skill>Web services</skill>
+            <skill>Maven</skill>
+        </row>
+        <row>
+            <skill>HTML</skill>
+            <skill>CSS</skill>
+            <skill>Bootstrap</skill>
+            <skill>JavaScript</skill>
+            <skill>JQuery</skill>
+            <skill>Ajax</skill>
+            <skill>Intellij IDEA</skill>
+            <skill>NetBeans</skill>
+            <skill>IBM Websphere</skill>
+        </row>
+    </skills>
+
+    <qualitys>
+        <quality>Предпочитаю работать в спокойной, но динамичной обстановке с гибким графиком, заинтересован в профессиональном и карьерном росте (архитектура систем).</quality>
+        <quality>Усидчив, позитивен и любопытен. Хорошо справляюсь с организаторскими задачами.</quality>
+    </qualitys>
+    <interests>
+        <interest>Хобби: путешествия, стрельба, рыбалка, музыка.</interest>
+    </interests>
+    <educations>
+        <education graduated="2016" name="Московский государственный технический университет радиотехники, электроники и автоматики, Москва"
+                   specialty="Факультет информационных технологий, Автоматизированные системы обработки информации и управления"/>
+    </educations>
+    <languages>
+        <language>Русский - родной</language>
+        <language>Английский - могу проходить интервью</language>
+    </languages>
+    <courses>
+        <course graduated="2016"  name="Серия курсов 'Эксперт - программист Java'" desc="Учебный центр «Специалист» при МГТУ им.Н.Э.Баумана, Java SE8; J2EE; EJB;"/>
+    </courses>
+    <additional>
+        <citizenship>Россия</citizenship>
+        <timetowork>не более часа</timetowork>
+    </additional>
+
+</contents>
