@@ -100,7 +100,7 @@ public class XMLCV {
         StringBuilder builder = new StringBuilder();
         String[] strings = textContent.split("\\n");
         for (String line : strings) {
-            if (line.isEmpty())
+            if (line.trim().isEmpty())
                 continue;
 
             if (compileLines.matcher(line).find()) {
