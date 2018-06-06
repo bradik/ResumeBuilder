@@ -130,9 +130,7 @@
                     <div class="row" style="shape-margin: 15px">
                         <div><h4>Обо мне</h4></div>
                         <div><h5>Личные качества:</h5></div>
-                        <ul>
-                            <xsl:apply-templates select="/contents/qualitys/quality"/>
-                        </ul>
+                        <xsl:copy-of select="/contents/qualitys/node()"/>
                     </div>
 
                     <div class="row" style="shape-margin: 15px">
@@ -213,7 +211,7 @@
                         <xsl:value-of select="position/@name"/>
                     </div>
                     <div>
-                        <xsl:copy-of select="description/div"/>
+                        <xsl:copy-of select="description/node()"/>
                     </div>
                 </div>
             </div>
@@ -228,9 +226,6 @@
         <div class="label label-default">
             <xsl:value-of select="text()"/>
         </div>
-    </xsl:template>
-    <xsl:template match="quality">
-        <li><xsl:value-of select="text()"/></li>
     </xsl:template>
     <xsl:template match="education">
         <div class="row" style="margin-top: 15px">
