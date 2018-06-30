@@ -1,4 +1,5 @@
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:xls="http://www.w3.org/1999/XSL/Transform">
     <xsl:output method="html" version="5.0"
                 doctype-system="about:legacy-compat"
                 encoding="UTF-8"
@@ -84,14 +85,13 @@
                                 </span>
                             </div>
                             <p/>
-                            <div>
-                                <xsl:value-of select="contents/personal/telephone"/>
-                            </div>
-                            <!--<div><a href="mailto:bradnm@ya.ru" itemprop="email">bradnm@ya.ru</a>- предпочитаемый способ связи</div>-->
-                            <xsl:param name="email">
-                                <xsl:value-of select="contents/personal/email/text()"/>
-                            </xsl:param>
-                            <div><a href="mailto:{$email}" itemprop="email"><xsl:value-of select="$email"/></a>- предпочитаемый способ связи</div>
+
+                            <xsl:if test="//contacts">
+                                <div class="container" style="padding-left: 0px">
+                                    <xsl:apply-templates select="//contacts/contact"/>
+                                </div>
+                            </xsl:if>
+
                         </div>
                     </div>
                     <hr/>
@@ -111,49 +111,71 @@
                             </li>
                         </ul>
                     </div>
-                    <p>Занятость: <xsl:value-of select="/contents/position/workload/text()"/></p>
-                    <p>График работы: <xsl:value-of select="/contents/position/schedule/text()"/></p>
+                    <p>Занятость:
+                        <xsl:value-of select="/contents/position/workload/text()"/>
+                    </p>
+                    <p>График работы:
+                        <xsl:value-of select="/contents/position/schedule/text()"/>
+                    </p>
                     <div>
                         <xsl:param name="data-start">
                             <xsl:value-of select="/contents/experiences/@start"/>
                         </xsl:param>
-                        <h4 id="experiences" data-start="{$data-start}">Опыт работы </h4>
+                        <h4 id="experiences" data-start="{$data-start}">Опыт работы</h4>
                     </div>
 
                     <xsl:apply-templates select="/contents/experiences/experience"/>
 
                     <div class="row" style="shape-margin: 15px">
-                        <div><h4>Ключевые навыки</h4></div>
+                        <div>
+                            <h4>Ключевые навыки</h4>
+                        </div>
                         <xsl:apply-templates select="/contents/skills/row"/>
                     </div>
 
                     <div class="row" style="shape-margin: 15px">
-                        <div><h4>Обо мне</h4></div>
-                        <div><h5>Личные качества:</h5></div>
+                        <div>
+                            <h4>Обо мне</h4>
+                        </div>
+                        <div>
+                            <h5>Личные качества:</h5>
+                        </div>
                         <xsl:copy-of select="/contents/qualitys/node()"/>
                     </div>
 
                     <div class="row" style="shape-margin: 15px">
-                        <div><h4>Высшее образование</h4></div>
+                        <div>
+                            <h4>Высшее образование</h4>
+                        </div>
                         <xsl:apply-templates select="/contents/educations/education"/>
                     </div>
 
                     <div class="row" style="shape-margin: 15px">
-                        <div><h4>Знание языков</h4></div>
+                        <div>
+                            <h4>Знание языков</h4>
+                        </div>
                         <ul>
                             <xsl:apply-templates select="/contents/languages/language"/>
                         </ul>
                     </div>
 
                     <div class="row" style="shape-margin: 15px">
-                        <div><h4>Повышение квалификации, курсы</h4></div>
+                        <div>
+                            <h4>Повышение квалификации, курсы</h4>
+                        </div>
                         <xsl:apply-templates select="/contents/courses/course"/>
                     </div>
 
                     <div class="row" style="line-height: 10.0px">
-                        <div><h4>Гражданство, время в пути до работы</h4></div>
-                        <p>Гражданство: <xsl:value-of select="/contents/additional/citizenship/text()"/></p>
-                        <p>Желательное время в пути до работы:  <xsl:value-of select="/contents/additional/timetowork/text()"/></p>
+                        <div>
+                            <h4>Гражданство, время в пути до работы</h4>
+                        </div>
+                        <p>Гражданство:
+                            <xsl:value-of select="/contents/additional/citizenship/text()"/>
+                        </p>
+                        <p>Желательное время в пути до работы:
+                            <xsl:value-of select="/contents/additional/timetowork/text()"/>
+                        </p>
                     </div>
 
                 </div>
@@ -177,6 +199,32 @@
             </body>
         </html>
     </xsl:template>
+
+    <xls:template match="contact">
+        <div class="row">
+            <div class="col-md-1">
+                <xsl:value-of select="@name"/>
+            </div>
+            <div class="col-md-5">
+                <xsl:choose>
+                    <xsl:when test="@href">
+                        <xsl:param name="contact-href">
+                            <xsl:value-of select="@href"/>
+                        </xsl:param>
+                        <xsl:param name="contact-target">
+                            <xsl:value-of select="@target"/>
+                        </xsl:param>
+                        <a href="{$contact-href}" target="{$contact-target}"><xsl:value-of select="text()"/></a>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="text()"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+                <xsl:if test="@default='true'"> - предпочитаемый способ связи</xsl:if>
+            </div>
+        </div>
+    </xls:template>
+
     <xsl:template match="experience">
         <div class="row" style="margin-top: 15px">
             <div class="col-md-3">
@@ -189,7 +237,7 @@
                 <div class="experiencesrow" data-start="{$start}" data-end="{$end}">
                     <!--<xsl:value-of select="@seniority"/>-->
                     <!--<div>-->
-                        <!--<xsl:value-of select="@duration"/>-->
+                    <!--<xsl:value-of select="@duration"/>-->
                     <!--</div>-->
                 </div>
             </div>
@@ -204,7 +252,11 @@
                                 <xsl:value-of select="@url"/>
                             </xsl:param>
                             <!--<span><a href="http://www.reksoft.com/ru/">http://www.reksoft.com/ru/</a></span>-->
-                            <span><a href="{$url}" target="_blank"><xsl:value-of select="@url"/></a></span>
+                            <span>
+                                <a href="{$url}" target="_blank">
+                                    <xsl:value-of select="@url"/>
+                                </a>
+                            </span>
                         </p>
                     </div>
                     <div>
@@ -230,25 +282,43 @@
     <xsl:template match="education">
         <div class="row" style="margin-top: 15px">
             <div class="col-md-3">
-                <span><xsl:value-of select="@graduated"/></span>
+                <span>
+                    <xsl:value-of select="@graduated"/>
+                </span>
             </div>
             <div class="col-md-5">
-                <h5><b><xsl:value-of select="@name"/></b></h5>
-                <span><xsl:value-of select="@specialty"/></span>
+                <h5>
+                    <b>
+                        <xsl:value-of select="@name"/>
+                    </b>
+                </h5>
+                <span>
+                    <xsl:value-of select="@specialty"/>
+                </span>
             </div>
         </div>
     </xsl:template>
     <xsl:template match="language">
-        <li><xsl:value-of select="text()"/></li>
+        <li>
+            <xsl:value-of select="text()"/>
+        </li>
     </xsl:template>
     <xsl:template match="course">
         <div class="row" style="margin-top: 15px">
             <div class="col-md-3">
-                <span><xsl:value-of select="@graduated"/></span>
+                <span>
+                    <xsl:value-of select="@graduated"/>
+                </span>
             </div>
             <div class="col-md-5">
-                <h5><b><xsl:value-of select="@name"/></b></h5>
-                <span><xsl:value-of select="@desc"/></span>
+                <h5>
+                    <b>
+                        <xsl:value-of select="@name"/>
+                    </b>
+                </h5>
+                <span>
+                    <xsl:value-of select="@desc"/>
+                </span>
             </div>
         </div>
     </xsl:template>

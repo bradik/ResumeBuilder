@@ -153,6 +153,11 @@ public class XMLCV {
 
             doc.normalize();
 
+            //TODO рассчитать дату рождения строкой, и возвраст
+
+            //TODO сформировать контактные данные
+
+
             //Пока больше не требуется т.к. данные расчитываются через js
             //calculatePeriod("experiences", "duration");
             //calculatePeriod("experience", "seniority", "duration");

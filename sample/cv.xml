@@ -4,8 +4,12 @@
         <name>Петров Кирилл Генадьевич</name>
         <addresslocality address="Санкт-Петербург" info=", готов к переезду, готов к командировкам"
                          metro="м. Ветеранов"/>
-        <telephone>+79219214545</telephone>
-        <email>petrov_kirill@gmail.com</email>
+
+        <contacts>
+            <contact name="Телефон:">+79219214545</contact>
+            <contact name="Email:" href="mailto:petrov_kirill@gmail.com" default="true">petrov_kirill@gmail.com</contact>
+            <contact href="https://github.com/bradik" target="_blank">GitHub account</contact>
+        </contacts>
     </personal>
 
     <position name="java developer">
