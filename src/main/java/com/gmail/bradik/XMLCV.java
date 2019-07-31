@@ -38,13 +38,38 @@ public class XMLCV {
 
     public XMLCV(String path) throws IOException {
         this.sourse = Paths.get(path);
-        this.tmp = Files.createTempFile("cv",".xml");
+        this.tmp = Files.createTempFile("cv", ".xml");
         //this.tmp = Paths.get("sample/cv-1.xml");
     }
 
     public URL getURI() throws MalformedURLException {
 
         return tmp.toFile().exists() ? tmp.toUri().toURL() : sourse.toUri().toURL();
+    }
+
+    private Element createElement(String name, String text) {
+        Element element = doc.createElement(name);
+        element.setTextContent(text);
+        return element;
+    }
+
+    private void calculatePersonal() {
+
+        NodeList elements = doc.getElementsByTagName("personal");
+        for (int i = 0; i < elements.getLength(); i++) {
+            Node item = elements.item(i);
+            NamedNodeMap attributes = item.getAttributes();
+            Date dBirthdate = DateUtil.toDate(attributes.getNamedItem("birthdate").getTextContent(), DateUtil.SDF_YYYY_MM_DD);
+
+            String sBirthdate = "родился " + DateUtil.toString(dBirthdate, DateUtil.SDF_DD_MMMM_YYYY) + " г.";
+            String sAge = DateUtil.durationYears(dBirthdate, new Date());
+
+            item.appendChild(doc.createElement("calc"))
+                    .appendChild(createElement("birthdate", sBirthdate))
+                    .appendChild(createElement("age", sAge));
+
+
+        }
     }
 
     private void calculatePeriod(String tagName, String... names) {
@@ -154,9 +179,7 @@ public class XMLCV {
             doc.normalize();
 
             //TODO рассчитать дату рождения строкой, и возвраст
-
-            //TODO сформировать контактные данные
-
+            calculatePersonal();
 
             //Пока больше не требуется т.к. данные расчитываются через js
             //calculatePeriod("experiences", "duration");

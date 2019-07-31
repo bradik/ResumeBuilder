@@ -1,6 +1,7 @@
 package com.gmail.bradik.util;
 
 import java.text.DateFormat;
+import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.*;
@@ -9,23 +10,48 @@ import java.util.Locale;
 
 public class DateUtil {
 
-    private static final DateFormat SDF_YYYY_MM = new SimpleDateFormat("yyyy-MM", Locale.ENGLISH);
-
-    private static final SimpleDateFormat SDF_MMMM_YYYY = new SimpleDateFormat("LLLL YYYY");
-
     static final String PRESENT_TIME = "по настоящее время";
 
-    public static Date toDate(String str) {
+    public static final DateFormat SDF_YYYY_MM = new SimpleDateFormat("yyyy-MM", Locale.ENGLISH);
+
+    public static final DateFormat SDF_YYYY_MM_DD = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+
+    public static final DateFormat SDF_MMMM_YYYY = new SimpleDateFormat("LLLL YYYY");
+
+    public static final DateFormat SDF_DD_MMMM_YYYY;
+
+    static {
+
+        String[] russMonths ={"января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"};
+        DateFormatSymbols russSymbol = new DateFormatSymbols();
+        russSymbol.setMonths(russMonths);
+
+        SDF_DD_MMMM_YYYY = new SimpleDateFormat("d MMMM yyyy", russSymbol);
+    }
+
+
+
+    public static String toString(Date date, DateFormat format){
+
+        return format.format(date);
+    }
+
+    public static Date toDate(String str, DateFormat format) {
         Date date = null;
 
         if (str.isEmpty()) return date;
 
         try {
-            date = SDF_YYYY_MM.parse(str);
+            date = format.parse(str);
         } catch (ParseException e) {
             e.printStackTrace();
         }
         return date;
+    }
+
+    public static Date toDate(String str) {
+
+        return toDate(str, SDF_YYYY_MM);
     }
 
     public static String seniority(Date start, Date end) {
@@ -69,6 +95,23 @@ public class DateUtil {
         return retVal;
     }
 
+    public static String durationYears(Date start, Date end){
+        String retVal = "";
+
+        try {
+
+            Period between = Period.between(toLocalDate(start), toLocalDate(end));
+
+            int years = between.getYears();
+
+            retVal = String.format("%1$s", toYearsStrRu(years));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return retVal;
+    }
+
     private static Instant toInstant(Date date) {
 
         return date != null ? date.toInstant() : Instant.now();
@@ -86,7 +129,9 @@ public class DateUtil {
 
     private static String toYearsStrRu(int num) {
 
-        return num == 0 ? "" : String.format("%1$d %2$s", num, num == 1 ? "год" : num < 4 ? "года" : "лет");
+        int fl = num % 10;
+
+        return num == 0 ? "" : String.format("%1$d %2$s", num, fl == 1 ? "год" : fl < 4 ? "года" : "лет");
     }
 
     private static String toMonthsStrRu(int num) {
