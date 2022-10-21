@@ -1,4 +1,4 @@
-package com.gmail.bradik.util;
+package com.gmail.bradik.resumebuilder.util;
 
 import java.io.File;
 import java.io.IOException;
