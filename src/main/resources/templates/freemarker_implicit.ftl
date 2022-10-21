@@ -1,0 +1,10 @@
+﻿[#ftl]
+[#-- @implicitly included --]
+[#-- @ftlvariable name="data" type="com.gmail.bradik.resumebuilder.dto.ResumeData" --]
+[#-- @ftlvariable name="dataService" type="com.gmail.bradik.resumebuilder.service.ResumeDataService" --]
+[#-- @ftlvariable name="contact" type="com.gmail.bradik.resumebuilder.dto.personal.Contact" --]
+[#-- @ftlvariable name="experience" type="com.gmail.bradik.resumebuilder.dto.experiences.Experience" --]
+[#-- @ftlvariable name="row" type="com.gmail.bradik.resumebuilder.dto.skills.Row" --]
+[#-- @ftlvariable name="education" type="com.gmail.bradik.resumebuilder.dto.educations.Education" --]
+[#-- @ftlvariable name="course" type="com.gmail.bradik.resumebuilder.dto.courses.Course" --]
+

@@ -2,12 +2,17 @@
 
 ##### To download the required dependencies (bootstrap, jquery, moment)
 ###### run: 
-* Maven with package
+```shell
+mvn clean package
+```
 ###### Run aplication with  parametres:
-"path/cv.xml" "path/photo.jpeg"
+```shell
+mvn spring-boot:run -D spring-boot.run.arguments=--photo=./sample/photo.jpeg,--data=./sample/cv.ru.xml
+```
+
 ###### For example run: 
 * build.cmd (once)
-* cv.cmd sample/cv.xml sample/photo.jpeg 
+* cv.cmd --data=sample/cv.xml --photo=sample/photo.jpeg 
 
 * The result will be located in the folder **/out** 
 

@@ -1,10 +1,14 @@
-package com.gmail.bradik.util;
+package com.gmail.bradik.resumebuilder.util;
+
+import org.apache.logging.log4j.util.Strings;
 
 import java.text.DateFormat;
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.*;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
 import java.util.Locale;
 
@@ -16,7 +20,7 @@ public class DateUtil {
 
     public static final DateFormat SDF_YYYY_MM_DD = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 
-    public static final DateFormat SDF_MMMM_YYYY = new SimpleDateFormat("LLLL YYYY");
+    public static final DateFormat SDF_MMMM_YYYY = new SimpleDateFormat("LLLL yyyy");
 
     public static final DateFormat SDF_DD_MMMM_YYYY;
 
@@ -34,6 +38,16 @@ public class DateUtil {
     public static String toString(Date date, DateFormat format){
 
         return format.format(date);
+    }
+
+    public static LocalDate toLocalDate(String str, String pattern) {
+        if ("yyyy-MM".equals(pattern)) {
+            str += "-01";
+            pattern+="-dd";
+        }
+        //1975-12-04
+        DateTimeFormatter format = DateTimeFormatter.ofPattern(pattern);
+        return LocalDate.parse(str, format);
     }
 
     public static Date toDate(String str, DateFormat format) {
